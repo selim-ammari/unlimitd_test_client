@@ -5,38 +5,41 @@ import { CURRENT_USER } from 'src/graphql/users/queries';
 const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
-  // eslint-disable-next-line no-unused-vars
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   const logout = () => {
-    // TODO: Implement the logout logic
+    setIsAuthenticated(false);
+    localStorage.removeItem('token');
   };
 
-  // eslint-disable-next-line no-unused-vars
   const [getCurrentUser, { data: currentUser, refetch: refetchCurrentUser }] = useLazyQuery(
     CURRENT_USER,
     {
       nextFetchPolicy: 'cache-and-network',
       onCompleted: () => {
-        // TODO: Implement on completed logic
+        setIsAuthenticated(true);
       },
       onError: () => {
-        // TODO: Implement on error logic
+        setIsAuthenticated(false);
+        localStorage.removeItem('token');
       },
       refetchWritePolicy: 'overwrite',
     }
   );
 
-  // eslint-disable-next-line no-unused-vars
   const onLoginSuccess = (token) => {
-    // TODO: Implement the onLoginSuccess logic
+    localStorage.setItem('token', token);
+    getCurrentUser();
   };
 
   useEffect(() => {
-    // TODO: implement the initialization logic
+    const token = localStorage.getItem('token');
+    if (token) {
+      getCurrentUser();
+    }
     setIsInitialized(true);
-  }, []);
+  }, [getCurrentUser]);
 
   return (
     <AuthContext.Provider

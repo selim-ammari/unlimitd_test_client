@@ -1,16 +1,13 @@
 import React from 'react';
+import { Navigate } from 'react-router';
 
 import LoadingScreen from '../components/LoadingScreen';
 import useAuth from '../hooks/useAuth';
 
-// TODO: Implement the auth guard logic
 const AuthGuard = ({ children }) => {
-  const { isInitialized } = useAuth();
-
-  if (!isInitialized) {
-    return <LoadingScreen />;
-  }
-
+  const { isAuthenticated, isInitialized } = useAuth();
+  if (!isInitialized) return <LoadingScreen />;
+  if (!isAuthenticated) return <Navigate to="/login" />;
   return <>{children}</>;
 };
 
