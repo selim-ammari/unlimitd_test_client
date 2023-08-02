@@ -8,8 +8,8 @@ const UserRoot = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (isInitialized) {
-      if (user?.role === USER_ROLES.ADMIN) navigate('/admin');
-      if (user?.role === USER_ROLES.USER) navigate('/user');
+      if (user?.role === USER_ROLES.ADMIN) navigate('/admin', { replace: true });
+      if (user?.role === USER_ROLES.USER) navigate('/user', { replace: true });
     }
   }, [isInitialized, user, navigate]);
   return null;

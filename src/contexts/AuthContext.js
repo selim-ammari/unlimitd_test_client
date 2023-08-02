@@ -19,6 +19,7 @@ const AuthProvider = ({ children }) => {
       nextFetchPolicy: 'cache-and-network',
       onCompleted: () => {
         setIsAuthenticated(true);
+        setIsInitialized(true);
       },
       onError: () => {
         setIsAuthenticated(false);
@@ -37,8 +38,9 @@ const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       getCurrentUser();
+    } else {
+      setIsInitialized(true);
     }
-    setIsInitialized(true);
   }, [getCurrentUser]);
 
   return (

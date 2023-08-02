@@ -63,7 +63,7 @@ const Router = () =>
     },
     {
       // TODO: Implement a "catch all" route that Navigate to the / page when hit a non-existing page
-      element: <Navigate replace to="/user" />,
+      element: <Navigate replace to="/" />,
       path: '*',
     },
   ]);

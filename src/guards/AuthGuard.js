@@ -7,7 +7,7 @@ import useAuth from '../hooks/useAuth';
 const AuthGuard = ({ children }) => {
   const { isAuthenticated, isInitialized } = useAuth();
   if (!isInitialized) return <LoadingScreen />;
-  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (!isAuthenticated) return <Navigate replace to="/login" />;
   return <>{children}</>;
 };
 
